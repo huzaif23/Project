@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/content_dash_board_v1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.delta.project.project.DashboadV1"
+    >
+
+    <include
+        android:id="@+id/toolbars"
+        layout="@layout/toolbar"
+        />
+
+    <Button
+        android:id="@+id/btn1"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/toolbars"
+        android:layout_marginTop="110dp"
+        android:text="@string/sites"
+        android:background="@drawable/buttonstyle"
+
+        />
+    <Button
+        android:id="@+id/btn2"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/btn1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:text="@string/ping"
+        android:background="@drawable/buttonstyle"
+        />
+    <Button
+        android:id="@+id/btn3"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:text="@string/card"
+        android:layout_below="@id/btn2"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/buttonstyle"
+        android:layout_centerHorizontal="true"
+
+        />
+
+    <Button
+        android:id="@+id/btn4"
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="8dp"
+        android:text="Change Password"
+        android:layout_below="@id/btn3"
+        android:background="@drawable/buttonstyle"
+        />
+
+
+</RelativeLayout>

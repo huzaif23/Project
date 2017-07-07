@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="configure_router">Configure Router</string>
+    <string name="panel">Panel</string>
+    <string name="card">Recharge Card</string>
+    <string name="sites">Sharing Sites</string>
+    <string name="config">Configure Router</string>
+    <string name="ping">Ping</string>
+</resources>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/activity_front"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.delta.project.project.Front"
+    >
+
+    <include
+        android:id="@+id/toolbars"
+        layout="@layout/toolbar"
+        />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_below="@id/toolbars"
+        android:id="@+id/layout"
+        >
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/q"
+            />
+    </FrameLayout>
+
+    <Button
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn1"
+        android:text="User"
+        android:background="@drawable/buttonstyle"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+         />
+
+    <Button
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/btn2"
+        android:text="Dealer"
+        android:background="@drawable/buttonstyle"
+        android:layout_below="@id/btn1"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        />
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="bottom"
+        ads:adSize="BANNER"
+        ads:adUnitId="ca-app-pub-2207019312510246/2466372016"
+        >
+    </com.google.android.gms.ads.AdView>
+
+
+
+</RelativeLayout>

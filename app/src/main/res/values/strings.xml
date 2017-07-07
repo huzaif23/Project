@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">DOT99</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_sharing_sites">SharingSites</string>
+    <string name="title_activity_recharge_card">RechargeCard</string>
+    <string name="title_activity_configure_router">ConfigureRouter</string>
+    <string name="title_activity_panel">Panel</string>
+    <string name="title_activity_sharing_data">SharingData</string>
+    <string name="configure_router">Configure Router</string>
+    <string name="panel">Panel</string>
+    <string name="card">Recharge Card</string>
+    <string name="sites">Sharing Sites</string>
+    <string name="config">Configure Router</string>
+    <string name="ping">Ping</string>
+
+
+        <!-- AdMob ad unit IDs -->
+        <string name="banner_home_footer">ca-app-pub-2207019312510246/2466372016</string>
+        <string name="interstitial_full_screen">ca-app-pub-0664570763252260/1769900428</string>
+
+
+</resources>
