@@ -25,12 +25,14 @@ public class RechargeCard extends AppCompatActivity {
         setSupportActionBar(toolbar);
        container = (RelativeLayout) findViewById(R.id.content_recharge_card);
         webView = new WebView(getApplicationContext());
+        webView.setMinimumHeight(700);
         container.addView(webView);
         Intent intent = getIntent();
         Bundle extra = intent.getExtras();
         s=extra.getString("r","p");
         Webs webs = new Webs(webView);
         webs.screenSupport();
+
             if(s.equals("recharge")) {
             url = "http://103.255.148.14/user/login.php";
             }
@@ -38,7 +40,7 @@ public class RechargeCard extends AppCompatActivity {
                 getSupportActionBar().setTitle("Panel");
             url = "http://103.255.148.14/dealer/login.php";
             }
-        webs.load(url);
+        webView.loadUrl(url);
     }
 
     @Override
@@ -65,5 +67,14 @@ public class RechargeCard extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_dash_board_v1, menu);
         return true;
     }
+
+//    private class GoUrl extends WebViewClient {
+//        @Override
+//        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//            view.loadUrl(url);
+//            return true;
+//        }
+//
+//    }
 
 }

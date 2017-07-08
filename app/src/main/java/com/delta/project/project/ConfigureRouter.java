@@ -10,6 +10,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.Formatter;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.HttpAuthHandler;
 import android.webkit.WebChromeClient;
@@ -25,11 +27,12 @@ public class ConfigureRouter extends AppCompatActivity {
     private WebView webView;
     final Context context = this;
     private String ip;
+    private Toolbar toolbar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configure_router);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbars);
+         toolbar = (Toolbar) findViewById(R.id.toolbars);
         setSupportActionBar(toolbar);
         relativeLayout = (RelativeLayout) findViewById(R.id.content_configure_router);
         webView = new WebView(getApplicationContext());
@@ -74,6 +77,7 @@ public class ConfigureRouter extends AppCompatActivity {
                                     String pass = ((EditText) v.findViewById(R.id.prompt_input_field_pass)).getText().toString();
                                     handler.proceed(user,pass);
 
+
                                 }
                             })
                     .setNegativeButton(android.R.string.cancel,
@@ -100,6 +104,30 @@ public class ConfigureRouter extends AppCompatActivity {
         webView.clearFormData();
         }
         super.finish();
+    }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+        if (id == R.id.refresh) {
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_dash_board_v1, menu);
+        return true;
     }
 }
 

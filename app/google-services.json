@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "15964614826",
+    "firebase_url": "https://deltanet-2594d.firebaseio.com",
+    "project_id": "deltanet-2594d",
+    "storage_bucket": "deltanet-2594d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:15964614826:android:6b7c4f2863cefd6f",
+        "android_client_info": {
+          "package_name": "com.delta.project.project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "15964614826-7f0qlpvhbnig36panvts8ghamhkq4cnr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.delta.project.project",
+            "certificate_hash": "668d9e71589eacc0e6277b0bb2af5bfb002312cb"
+          }
+        },
+        {
+          "client_id": "15964614826-tkhlgu8vvblrlthvl9jvkvfki2iakq7i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEcfFGo_oDGycUtN4kWI6u2JLU0DKwch8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "15964614826-tkhlgu8vvblrlthvl9jvkvfki2iakq7i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

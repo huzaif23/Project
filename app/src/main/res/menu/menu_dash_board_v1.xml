@@ -13,7 +13,7 @@
         android:id="@+id/refresh"
         android:orderInCategory="200"
         android:title="Search"
-        android:icon="@android:drawable/ic_menu_rotate"
+        android:icon="@android:drawable/ic_popup_sync"
         app:showAsAction="always"
         >
     </item>

@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Environment;
 import android.webkit.DownloadListener;
 import android.webkit.URLUtil;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
@@ -21,6 +22,8 @@ public class Webs  {
     public Webs(WebView webView) {
         this.webView=webView;
         webView.setWebViewClient(new GoUrl());
+        webView.setWebChromeClient(new WebChromeClient());
+        webView.getSettings().setJavaScriptEnabled(true);
     }
 
 

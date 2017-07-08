@@ -20,7 +20,6 @@ public class Pings extends AppCompatActivity {
 
     private TextView textView;
     private EditText editText;
-    private volatile boolean b=true;
     Button b1;
     Button b2;
     Toolbar toolbar ;
@@ -48,12 +47,15 @@ public class Pings extends AppCompatActivity {
                     pingProcess.cancel(true);
                     pingProcess.onCancelled();
                 }
-                if(textView != null) {
+                if(editText != null) {
                 a =  editText.getText().toString();
+                    pingProcess = new PingProcess();
+                    pingProcess.execute(a);
                 }
 
-                pingProcess = new PingProcess();
-                pingProcess.execute(a);
+                    Toast.makeText(getApplicationContext(),"Please enter IP to Ping",Toast.LENGTH_SHORT).show();
+
+
             }
             });
 
@@ -101,6 +103,7 @@ public class Pings extends AppCompatActivity {
     public class PingProcess extends AsyncTask<String,String,String> {
         Process process;
         Runtime runtime = Runtime.getRuntime();
+        int exit=0;
 
         @Override
         protected void onPostExecute(String s) {
@@ -109,6 +112,10 @@ public class Pings extends AppCompatActivity {
 
         @Override
         protected void onProgressUpdate(String... values) {
+//            int a= process.exitValue();
+//            if(a == 1) {
+//                textView.append("Request timed out");
+//            }
           textView.append(values[0] + "\n");
       }
 
@@ -141,10 +148,7 @@ while(!isCancelled()) {
         e.printStackTrace();
     }
 
-
 }
-
-
             return "";
         }
 
