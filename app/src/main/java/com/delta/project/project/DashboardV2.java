@@ -40,6 +40,8 @@ public class DashboardV2 extends AppCompatActivity implements View.OnClickListen
                 startActivity(intent);
                 break;
             case R.id.btns3 :
+                intent = new Intent(this,Pings.class);
+                startActivity(intent);
                 break;
         }
     }

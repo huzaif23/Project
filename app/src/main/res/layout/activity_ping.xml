@@ -5,8 +5,6 @@
     android:id="@+id/activity_ping"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-
-
     tools:context="com.delta.project.project.Pings">
 
     <include
@@ -21,12 +19,15 @@
     android:gravity="left"
     android:layout_below="@id/toolbars"
     >
+
     <EditText
         android:id="@+id/et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="start"
         android:hint="Enter Ip to ping"
-        android:layout_gravity="left"/>
+        android:inputType="none"
+        />
 
 </android.support.design.widget.TextInputLayout>
 

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -9,13 +10,4 @@
         android:title="About Developer"
         app:showAsAction="never"
         />
-    <item
-        android:id="@+id/refresh"
-        android:orderInCategory="200"
-        android:title="Search"
-        android:icon="@android:drawable/ic_popup_sync"
-        app:showAsAction="always"
-        >
-    </item>
-
 </menu>

@@ -22,18 +22,20 @@
         android:layout_marginTop="110dp"
         android:text="@string/sites"
         android:background="@drawable/buttonstyle"
-
         />
+
     <Button
         android:id="@+id/btn2"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
-        android:layout_below="@id/btn1"
         android:layout_centerHorizontal="true"
+        android:layout_below="@id/btn1"
         android:layout_marginTop="8dp"
-        android:text="@string/ping"
+        android:text="Mobile TV"
         android:background="@drawable/buttonstyle"
         />
+
+
     <Button
         android:id="@+id/btn3"
         android:layout_width="180dp"

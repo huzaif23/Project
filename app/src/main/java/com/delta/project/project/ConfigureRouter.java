@@ -13,59 +13,58 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.webkit.HttpAuthHandler;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class ConfigureRouter extends AppCompatActivity {
+import java.io.IOException;
+import java.net.Authenticator;
+import java.net.HttpURLConnection;
+import java.net.PasswordAuthentication;
+import java.net.URL;
 
-    private RelativeLayout relativeLayout;
-    private WebView webView;
-    final Context context = this;
+public class ConfigureRouter extends AppCompatActivity  {
+
+    private Webs webView;
+   Context context = this;
     private String ip;
     private Toolbar toolbar;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFeatureInt(Window.FEATURE_PROGRESS, Window.PROGRESS_VISIBILITY_ON);
         setContentView(R.layout.activity_configure_router);
          toolbar = (Toolbar) findViewById(R.id.toolbars);
         setSupportActionBar(toolbar);
-        relativeLayout = (RelativeLayout) findViewById(R.id.content_configure_router);
-        webView = new WebView(getApplicationContext());
-        relativeLayout.addView(webView);
-        final WifiManager wm = (WifiManager) super.getApplicationContext().getSystemService(WIFI_SERVICE);
+        webView = (Webs) findViewById(R.id.web);
+        final WifiManager wm = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
         DhcpInfo dhcpInfo = wm.getDhcpInfo();
         ip = Formatter.formatIpAddress(dhcpInfo.gateway);
-        Webs webs = new Webs(webView);
-        webs.screenSupport();
-        webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new GoUrl());
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.getSettings().setDomStorageEnabled(true);
         webView.loadUrl("http://"+ip);
     }
 
     private class GoUrl extends WebViewClient {
 
-
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            view.loadUrl(url);
+            Toast.makeText(ConfigureRouter.this,"Works",Toast.LENGTH_SHORT).show();
+                view.loadUrl(url);
             return true;
-
         }
 
+
         @Override
-        public void onReceivedHttpAuthRequest(WebView view, final HttpAuthHandler handler, String host, String realm) {
+        public void onReceivedHttpAuthRequest(final WebView view, final HttpAuthHandler handler, String host, String realm) {
             final LayoutInflater factory = LayoutInflater.from(context);
             final View v = factory.inflate(R.layout.jsdialogue, null);
             ((TextView)v.findViewById(R.id.prompt_message_text)).setText("Enter your username & password");
-            ((EditText)v.findViewById(R.id.prompt_input_field)).setText("");
-            ((EditText)v.findViewById(R.id.prompt_input_field_pass)).setText("");
 
             new AlertDialog.Builder(context)
                     .setTitle(R.string.title_activity_configure_router)
@@ -75,9 +74,7 @@ public class ConfigureRouter extends AppCompatActivity {
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     String user = ((EditText)v.findViewById(R.id.prompt_input_field)).getText().toString();
                                     String pass = ((EditText) v.findViewById(R.id.prompt_input_field_pass)).getText().toString();
-                                    handler.proceed(user,pass);
-
-
+                                  webView.loadUrl("http://"+user+":"+pass+"@"+ip);
                                 }
                             })
                     .setNegativeButton(android.R.string.cancel,
@@ -128,6 +125,25 @@ public class ConfigureRouter extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_dash_board_v1, menu);
         return true;
+    }
+
+
+    public void authenticate() {
+        Authenticator.setDefault(new Authenticator() {
+            @Override
+            protected PasswordAuthentication getPasswordAuthentication() {
+                return new PasswordAuthentication("admin","admin1".toCharArray());
+            }
+        });
+        try {
+            HttpURLConnection auth = (HttpURLConnection) new URL("http://192.168.1.1").openConnection();
+            auth.setUseCaches(false);
+            auth.connect();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
     }
 }
 

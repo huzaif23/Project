@@ -6,33 +6,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.webkit.WebView;
-import android.widget.RelativeLayout;
+import android.view.Window;
+import android.widget.FrameLayout;
+import android.widget.Toast;
 
 public class RechargeCard extends AppCompatActivity {
 
-    private WebView webView;
-    private RelativeLayout container;
+     Webs webView;
+    private FrameLayout container;
     private String url;
     private String s;
    private Toolbar toolbar;
+    private int count=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFeatureInt(Window.FEATURE_PROGRESS, Window.PROGRESS_VISIBILITY_ON);
         setContentView(R.layout.activity_recharge_card);
         toolbar = (Toolbar) findViewById(R.id.toolbars);
         setSupportActionBar(toolbar);
-       container = (RelativeLayout) findViewById(R.id.content_recharge_card);
-        webView = new WebView(getApplicationContext());
-        webView.setMinimumHeight(700);
-        container.addView(webView);
+        webView = (Webs) findViewById(R.id.web);
         Intent intent = getIntent();
         Bundle extra = intent.getExtras();
         s=extra.getString("r","p");
-        Webs webs = new Webs(webView);
-        webs.screenSupport();
-
             if(s.equals("recharge")) {
             url = "http://103.255.148.14/user/login.php";
             }
@@ -40,6 +37,7 @@ public class RechargeCard extends AppCompatActivity {
                 getSupportActionBar().setTitle("Panel");
             url = "http://103.255.148.14/dealer/login.php";
             }
+
         webView.loadUrl(url);
     }
 
@@ -68,13 +66,33 @@ public class RechargeCard extends AppCompatActivity {
         return true;
     }
 
-//    private class GoUrl extends WebViewClient {
-//        @Override
-//        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//            view.loadUrl(url);
-//            return true;
-//        }
-//
-//    }
+    @Override
+    public void onBackPressed() {
+        count++;
+        if(webView.canGoBack()) {
+            webView.goBack();
+        }
+        else if(count <= 1) {
+            Toast.makeText(this,"Please press again to go back session will be logged out",Toast.LENGTH_SHORT).show();
+         }
+         else {
+            super.onBackPressed();
+        }
+    }
 
+    @Override
+    public void onDestroy() {
+        if (webView!=null){
+        webView.clearHistory();
+        webView.clearCache(true);
+        webView.pauseTimers();
+    }
+    super.onDestroy();
+}
+
+    @Override
+    protected void onResume() {
+        webView.reload();
+        super.onResume();
+    }
 }

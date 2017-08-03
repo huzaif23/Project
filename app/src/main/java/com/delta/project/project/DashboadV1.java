@@ -34,26 +34,32 @@ public class DashboadV1 extends AppCompatActivity implements View.OnClickListene
     @Override
     public void onClick(View v) {
         Intent intent;
+        Bundle bundle;
         switch (v.getId()) {
             case R.id.btn1:
-                intent= new Intent(DashboadV1.this,SharingSites.class);
+                intent= new Intent(this,SharingSites.class);
                 startActivity(intent);
                 break;
             case R.id.btn2:
-                intent = new Intent(this,Pings.class);
+                intent = new Intent(this,SharingData.class);
+                bundle = new Bundle();
+                bundle.putString("site_name","Mobile TV");
+                intent.putExtras(bundle);
                 startActivity(intent);
                 break;
+
             case R.id.btn3:
-                intent=new Intent(DashboadV1.this,RechargeCard.class);
-                Bundle bundle = new Bundle();
+                intent=new Intent(this,RechargeCard.class);
+                bundle = new Bundle();
                 bundle.putString("r","recharge");
                 intent.putExtras(bundle);
                 startActivity(intent);
                 break;
             case R.id.btn4:
-                intent= new Intent(DashboadV1.this,ConfigureRouter.class);
+                intent= new Intent(this,ConfigureRouter.class);
                 startActivity(intent);
                 break;
+
 
             default:  Toast.makeText(DashboadV1.this, "Please Choose from above", Toast.LENGTH_SHORT).show();
 

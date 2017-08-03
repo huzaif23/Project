@@ -7,26 +7,31 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
-//import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.firebase.analytics.FirebaseAnalytics;
+
 
 public class Front extends AppCompatActivity {
 
     private Button b1,b2;
     private AdView adView;
-//    private FirebaseAnalytics mFirebaseAnalytics;
+    private Toolbar toolbar;
+    private FirebaseAnalytics mFirebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_front);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbars);
+        toolbar = (Toolbar) findViewById(R.id.toolbars);
         setSupportActionBar(toolbar);
-//        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        mFirebaseAnalytics.setAnalyticsCollectionEnabled(true);
         b1 = (Button) findViewById(R.id.btn1);
         b2= (Button) findViewById(R.id.btn2);
         adView = (AdView) findViewById(R.id.adView);
@@ -84,5 +89,26 @@ public class Front extends AppCompatActivity {
         }
         super.onDestroy();
     }
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            Intent intent = new Intent(Front.this,Info.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.without_refresh, menu);
+        return true;
+    }
+
 
 }

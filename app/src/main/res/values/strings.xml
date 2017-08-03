@@ -12,8 +12,14 @@
     <string name="sites">Sharing Sites</string>
     <string name="config">Configure Router</string>
     <string name="ping">Ping</string>
-
-
+    <string name="msg">
+        This Application is developed by <b> Muhammad Huzaifa </b> \n
+        \nIf you have any query,question or advice Please email at <b>huzaifaahmed37@gmail.com</b>
+       \n Permissions Required:\n
+        \n \u2022 Access Wifi State for Ping Operations
+       \n \u2022 Access Storage for Download Operations
+        \n \u2022 Internet for Ping operations \n
+    </string>
         <!-- AdMob ad unit IDs -->
         <string name="banner_home_footer">ca-app-pub-2207019312510246/2466372016</string>
         <string name="interstitial_full_screen">ca-app-pub-0664570763252260/1769900428</string>

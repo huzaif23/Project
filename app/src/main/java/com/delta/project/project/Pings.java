@@ -12,6 +12,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.startapp.android.publish.adsCommon.StartAppAd;
+import com.startapp.android.publish.adsCommon.StartAppSDK;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -28,6 +31,8 @@ public class Pings extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        StartAppSDK.init(this, "206541231", true);
+       StartAppAd.disableSplash();
         setContentView(R.layout.activity_ping);
         toolbar = (Toolbar) findViewById(R.id.toolbars);
         setSupportActionBar(toolbar);
@@ -53,8 +58,6 @@ public class Pings extends AppCompatActivity {
                     pingProcess.execute(a);
                 }
 
-                    Toast.makeText(getApplicationContext(),"Please enter IP to Ping",Toast.LENGTH_SHORT).show();
-
 
             }
             });
@@ -62,6 +65,7 @@ public class Pings extends AppCompatActivity {
                 b2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        Toast.makeText(getApplicationContext(),"Stopping",Toast.LENGTH_SHORT).show();
                         if(pingProcess !=null ) {
                         pingProcess.cancel(true);
                         }
@@ -103,7 +107,6 @@ public class Pings extends AppCompatActivity {
     public class PingProcess extends AsyncTask<String,String,String> {
         Process process;
         Runtime runtime = Runtime.getRuntime();
-        int exit=0;
 
         @Override
         protected void onPostExecute(String s) {
@@ -112,11 +115,11 @@ public class Pings extends AppCompatActivity {
 
         @Override
         protected void onProgressUpdate(String... values) {
-//            int a= process.exitValue();
-//            if(a == 1) {
-//                textView.append("Request timed out");
-//            }
-          textView.append(values[0] + "\n");
+            if(values[0].isEmpty()) {
+                textView.setText("request timed out");
+            }
+            textView.append(values[0] + "\n");
+
       }
 
 
@@ -124,7 +127,7 @@ public class Pings extends AppCompatActivity {
         protected String doInBackground(String... params) {
         String url = params[0];
         String s;
-        String res = "";
+
 
 
 while(!isCancelled()) {
@@ -135,13 +138,15 @@ while(!isCancelled()) {
         process = runtime.exec("/system/bin/ping -c 20 " + url + "");
 
         BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-
         while ((s = bufferedReader.readLine()) != null) {
             if (isCancelled()){
                 break;
             }
             publishProgress(s);
+
         }
+
+
 
 
     } catch (IOException e) {
@@ -157,5 +162,8 @@ while(!isCancelled()) {
            super.onCancelled();
     }
 
-}}
+}
+
+
+}
 

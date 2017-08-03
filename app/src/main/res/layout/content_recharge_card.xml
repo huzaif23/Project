@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/content_recharge_card"
@@ -9,9 +10,19 @@
     tools:context="com.delta.project.project.RechargeCard"
     tools:showIn="@layout/activity_recharge_card"
     >
+
     <include
         android:id="@+id/toolbars"
         layout="@layout/toolbar"
        />
+
+    <com.delta.project.project.Webs
+        android:id="@+id/web"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbars"
+        >
+    </com.delta.project.project.Webs>
+
 
 </RelativeLayout>

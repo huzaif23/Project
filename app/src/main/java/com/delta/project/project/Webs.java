@@ -4,6 +4,7 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
+import android.util.AttributeSet;
 import android.webkit.DownloadListener;
 import android.webkit.URLUtil;
 import android.webkit.WebChromeClient;
@@ -13,49 +14,39 @@ import android.widget.Toast;
 
 import static android.content.Context.DOWNLOAD_SERVICE;
 
-public class Webs  {
+public class Webs extends WebView  {
     WebView webView;
-    Context context;
-    DownloadListener downloadListener;
-    String url;
 
-    public Webs(WebView webView) {
-        this.webView=webView;
-        webView.setWebViewClient(new GoUrl());
-        webView.setWebChromeClient(new WebChromeClient());
-        webView.getSettings().setJavaScriptEnabled(true);
+    public Webs(Context context) {
+        super(context);
+        this.setWebViewClient(new GoUrl());
+        this.setWebChromeClient(new WebChromeClient());
+        this.getSettings().setJavaScriptEnabled(true);
+        screenSupport();
+    }
+    public Webs(Context context, AttributeSet attributeSet) {
+        super(context,attributeSet);
+        this.setWebViewClient(new GoUrl());
+        this.setWebChromeClient(new WebChromeClient());
+        this.getSettings().setJavaScriptEnabled(true);
+        screenSupport();
+
     }
 
 
     public void screenSupport() {
-        webView.getSettings().setLoadWithOverviewMode(true);
-        webView.getSettings().setUseWideViewPort(true);
-        webView.getSettings().setSupportZoom(true);
-        webView.getSettings().setBuiltInZoomControls(true);
-        webView.getSettings().setDisplayZoomControls(true);
-        webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-
+        this.getSettings().setLoadWithOverviewMode(true);
+        this.getSettings().setUseWideViewPort(true);
+        this.getSettings().setSupportZoom(true);
+        this.getSettings().setBuiltInZoomControls(true);
+        this.getSettings().setDisplayZoomControls(true);
+        this.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
     }
 
-    public void load(String url) {
-        this.webView.loadUrl(url);
-    }
 
     public void Download(final Context context) {
-        this.context=context;
-        webView.setDownloadListener(new DownloadListener() {
-            public void onDownloadStart(String url, String userAgent,
-                                        String contentDisposition, String mimetype,
-                                        long contentLength) {
-                Toast.makeText(context,"Starting Download",Toast.LENGTH_SHORT).show();
-                DownloadManager.Request request = new DownloadManager.Request( Uri.parse(url));
-                request.allowScanningByMediaScanner();
-                request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-                request.setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, URLUtil.guessFileName(url,contentDisposition,mimetype));
-                DownloadManager dm = (DownloadManager) context.getSystemService(DOWNLOAD_SERVICE);
-                dm.enqueue(request);
-            }
-        });
+
+
     }
 
 
@@ -63,10 +54,10 @@ public class Webs  {
     private class GoUrl extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
+
             view.loadUrl(url);
             return true;
         }
-
     }
 
 
