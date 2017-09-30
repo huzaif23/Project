@@ -9,22 +9,27 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+
 public class Info extends AppCompatActivity implements View.OnClickListener {
-    private Toolbar toolbar;
     private TextView t1;
     private ImageView img1, img2, img3,img4;
-
-
+    private AdView adView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
-        toolbar = (Toolbar) findViewById(R.id.toolbars);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbars);
         t1 = (TextView) findViewById(R.id.txt1);
         img1 = (ImageView) findViewById(R.id.img1);
         img2 = (ImageView) findViewById(R.id.img2);
         img3 = (ImageView) findViewById(R.id.img3);
         img4 = (ImageView) findViewById(R.id.img4);
+        adView = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .build();
+        adView.loadAd(adRequest);
         img1.setOnClickListener(this);
         img2.setOnClickListener(this);
         img3.setOnClickListener(this);
@@ -55,4 +60,28 @@ public class Info extends AppCompatActivity implements View.OnClickListener {
                 break;
         }
     }
+    @Override
+    public void onPause() {
+        if (adView != null) {
+            adView.pause();
+        }
+        super.onPause();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (adView != null) {
+            adView.resume();
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        if (adView != null) {
+            adView.destroy();
+        }
+        super.onDestroy();
+    }
+
 }

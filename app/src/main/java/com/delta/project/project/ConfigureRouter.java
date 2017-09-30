@@ -2,9 +2,11 @@ package com.delta.project.project;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.DhcpInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,13 +21,8 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.io.IOException;
-import java.net.Authenticator;
-import java.net.HttpURLConnection;
-import java.net.PasswordAuthentication;
-import java.net.URL;
+import static android.support.design.widget.Snackbar.make;
 
 public class ConfigureRouter extends AppCompatActivity  {
 
@@ -33,6 +30,8 @@ public class ConfigureRouter extends AppCompatActivity  {
    Context context = this;
     private String ip;
     private Toolbar toolbar;
+    private String msg;
+    private Boolean check=false;
 
 
     @Override
@@ -43,9 +42,13 @@ public class ConfigureRouter extends AppCompatActivity  {
          toolbar = (Toolbar) findViewById(R.id.toolbars);
         setSupportActionBar(toolbar);
         webView = (Webs) findViewById(R.id.web);
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        msg =bundle.getString("c");
         final WifiManager wm = (WifiManager) getApplicationContext().getSystemService(WIFI_SERVICE);
         DhcpInfo dhcpInfo = wm.getDhcpInfo();
         ip = Formatter.formatIpAddress(dhcpInfo.gateway);
+
         webView.setWebViewClient(new GoUrl());
         webView.loadUrl("http://"+ip);
     }
@@ -54,14 +57,23 @@ public class ConfigureRouter extends AppCompatActivity  {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            Toast.makeText(ConfigureRouter.this,"Works",Toast.LENGTH_SHORT).show();
+            if (msg.equals("change")) {
+                if (check == false) {
+              Snackbar snackbar=  Snackbar.make(webView,"To change your Password just go to bottom of the page and click on Security Key  enter new Password and press Ok ***Dont change anything else***"
+                        ,Snackbar.LENGTH_LONG);
+                    View snack = snackbar.getView();
+                    TextView text = (TextView) snack.findViewById(android.support.design.R.id.snackbar_text);
+                    text.setMaxLines(6);
+                    snackbar.show();
+            }
+            }
                 view.loadUrl(url);
             return true;
         }
 
-
         @Override
         public void onReceivedHttpAuthRequest(final WebView view, final HttpAuthHandler handler, String host, String realm) {
+
             final LayoutInflater factory = LayoutInflater.from(context);
             final View v = factory.inflate(R.layout.jsdialogue, null);
             ((TextView)v.findViewById(R.id.prompt_message_text)).setText("Enter your username & password");
@@ -74,7 +86,15 @@ public class ConfigureRouter extends AppCompatActivity  {
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     String user = ((EditText)v.findViewById(R.id.prompt_input_field)).getText().toString();
                                     String pass = ((EditText) v.findViewById(R.id.prompt_input_field_pass)).getText().toString();
-                                  webView.loadUrl("http://"+user+":"+pass+"@"+ip);
+                                  handler.proceed(user,pass);
+                                    if (msg.equals("change")) {
+                                   Snackbar snackbar =  make(webView,"To change your Password just  go Wireless -> Wireless Security go to the bottom of the page and click on change Psk Password  enter new password and click save  ***Dont change anything else***"
+                                            ,Snackbar.LENGTH_LONG);
+                                    View snack = snackbar.getView();
+                                        TextView text = (TextView) snack.findViewById(android.support.design.R.id.snackbar_text);
+                                        text.setMaxLines(6);
+                                        snackbar.show();
+                                    }
                                 }
                             })
                     .setNegativeButton(android.R.string.cancel,
@@ -90,7 +110,7 @@ public class ConfigureRouter extends AppCompatActivity  {
                                 }
                             })
                     .show();
-        }
+     }
 
     }
     @Override
@@ -127,24 +147,13 @@ public class ConfigureRouter extends AppCompatActivity  {
         return true;
     }
 
-
-    public void authenticate() {
-        Authenticator.setDefault(new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("admin","admin1".toCharArray());
-            }
-        });
-        try {
-            HttpURLConnection auth = (HttpURLConnection) new URL("http://192.168.1.1").openConnection();
-            auth.setUseCaches(false);
-            auth.connect();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
+    @Override
+    protected void onResume() {
+        webView.reload();
+        super.onResume();
     }
+
+
 }
 
 

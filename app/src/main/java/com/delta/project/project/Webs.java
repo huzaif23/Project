@@ -1,21 +1,12 @@
 package com.delta.project.project;
 
-import android.app.DownloadManager;
 import android.content.Context;
-import android.net.Uri;
-import android.os.Environment;
 import android.util.AttributeSet;
-import android.webkit.DownloadListener;
-import android.webkit.URLUtil;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
-
-import static android.content.Context.DOWNLOAD_SERVICE;
 
 public class Webs extends WebView  {
-    WebView webView;
 
     public Webs(Context context) {
         super(context);
@@ -33,7 +24,6 @@ public class Webs extends WebView  {
 
     }
 
-
     public void screenSupport() {
         this.getSettings().setLoadWithOverviewMode(true);
         this.getSettings().setUseWideViewPort(true);
@@ -42,19 +32,9 @@ public class Webs extends WebView  {
         this.getSettings().setDisplayZoomControls(true);
         this.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
     }
-
-
-    public void Download(final Context context) {
-
-
-    }
-
-
-
     private class GoUrl extends WebViewClient {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-
             view.loadUrl(url);
             return true;
         }

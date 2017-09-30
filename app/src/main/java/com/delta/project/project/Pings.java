@@ -4,6 +4,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.method.KeyListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,9 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import com.startapp.android.publish.adsCommon.StartAppAd;
-import com.startapp.android.publish.adsCommon.StartAppSDK;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,11 +26,10 @@ public class Pings extends AppCompatActivity {
     Toolbar toolbar ;
     int c = 0;
     PingProcess pingProcess=new PingProcess();
+    KeyListener keyListener ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StartAppSDK.init(this, "206541231", true);
-       StartAppAd.disableSplash();
         setContentView(R.layout.activity_ping);
         toolbar = (Toolbar) findViewById(R.id.toolbars);
         setSupportActionBar(toolbar);
@@ -41,19 +38,22 @@ public class Pings extends AppCompatActivity {
         editText = (EditText) findViewById(R.id.et);
         b1 = (Button) findViewById(R.id.button);
         b2 = (Button) findViewById(R.id.button1);
-
+        keyListener = editText.getKeyListener();
 
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 c++;
                 String a="";
+
                 if(c>1) {
                     pingProcess.cancel(true);
                     pingProcess.onCancelled();
                 }
                 if(editText != null) {
                 a =  editText.getText().toString();
+                    editText.setKeyListener(null);
+                    b1.setEnabled(false);
                     pingProcess = new PingProcess();
                     pingProcess.execute(a);
                 }
@@ -65,6 +65,9 @@ public class Pings extends AppCompatActivity {
                 b2.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+
+                        editText.setKeyListener(keyListener);
+                        b1.setEnabled(true);
                         Toast.makeText(getApplicationContext(),"Stopping",Toast.LENGTH_SHORT).show();
                         if(pingProcess !=null ) {
                         pingProcess.cancel(true);
@@ -97,6 +100,8 @@ public class Pings extends AppCompatActivity {
         }
         if(id == R.id.refresh) {
             textView.setText("");
+            pingProcess.cancel(true);
+            b1.setEnabled(true);
         }
 
 
@@ -115,11 +120,7 @@ public class Pings extends AppCompatActivity {
 
         @Override
         protected void onProgressUpdate(String... values) {
-            if(values[0].isEmpty()) {
-                textView.setText("request timed out");
-            }
             textView.append(values[0] + "\n");
-
       }
 
 

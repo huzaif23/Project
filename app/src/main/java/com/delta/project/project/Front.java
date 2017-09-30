@@ -14,6 +14,7 @@ import android.widget.Button;
 
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 
@@ -30,14 +31,13 @@ public class Front extends AppCompatActivity {
         setContentView(R.layout.activity_front);
         toolbar = (Toolbar) findViewById(R.id.toolbars);
         setSupportActionBar(toolbar);
+        MobileAds.initialize(this,"ca-app-pub-2207019312510246~4082706019");
         mFirebaseAnalytics = FirebaseAnalytics.getInstance(this);
         mFirebaseAnalytics.setAnalyticsCollectionEnabled(true);
         b1 = (Button) findViewById(R.id.btn1);
         b2= (Button) findViewById(R.id.btn2);
         adView = (AdView) findViewById(R.id.adView);
         AdRequest adRequest = new AdRequest.Builder()
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
-                .addTestDevice("2A084023A710318A26E94F0CC5113AC6")
                 .build();
         adView.loadAd(adRequest);
         b1.setOnClickListener(new View.OnClickListener() {

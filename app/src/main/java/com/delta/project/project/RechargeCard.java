@@ -7,13 +7,13 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.Window;
-import android.widget.FrameLayout;
+import android.webkit.WebChromeClient;
+import android.webkit.WebView;
 import android.widget.Toast;
 
 public class RechargeCard extends AppCompatActivity {
 
      Webs webView;
-    private FrameLayout container;
     private String url;
     private String s;
    private Toolbar toolbar;
@@ -30,13 +30,25 @@ public class RechargeCard extends AppCompatActivity {
         Intent intent = getIntent();
         Bundle extra = intent.getExtras();
         s=extra.getString("r","p");
-            if(s.equals("recharge")) {
+            if(s.equals("Recharge Card")) {
             url = "http://103.255.148.14/user/login.php";
             }
         else  {
                 getSupportActionBar().setTitle("Panel");
             url = "http://103.255.148.14/dealer/login.php";
             }
+        webView.setWebChromeClient(new WebChromeClient() {
+            public void onProgressChanged(WebView view, int progress) {
+                //Make the bar disappear after URL is loaded, and changes string to Loading...
+                setTitle("Loading...");
+                setProgress(progress * 100); //Make the bar disappear after URL is loaded
+
+                // Return the app name after finish loading
+                if (progress == 100)
+                    setTitle(s);
+            }
+
+        });
 
         webView.loadUrl(url);
     }
@@ -81,16 +93,16 @@ public class RechargeCard extends AppCompatActivity {
     }
 
     @Override
-    public void onDestroy() {
-        if (webView!=null){
-        webView.clearHistory();
-        webView.clearCache(true);
-        webView.pauseTimers();
+    public void finish() {
+        super.finish();
     }
-    super.onDestroy();
-}
 
     @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+        @Override
     protected void onResume() {
         webView.reload();
         super.onResume();

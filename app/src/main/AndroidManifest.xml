@@ -24,17 +24,17 @@
         <activity
             android:name=".RechargeCard"
             android:label="@string/title_activity_recharge_card"
-            android:noHistory="true"
+
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ConfigureRouter"
             android:label="@string/title_activity_configure_router"
-            android:noHistory="true"
+
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".SharingData"
             android:label="@string/title_activity_sharing_data"
-            android:noHistory="true"
+
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".Front"
@@ -59,7 +59,7 @@
         <activity
             android:name="com.google.android.gms.ads.AdActivity"
             android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" />
-        <activity android:name=".SpeedTest" />
+
         <activity
             android:name="com.startapp.android.publish.ads.list3d.List3DActivity"
             android:theme="@android:style/Theme" />

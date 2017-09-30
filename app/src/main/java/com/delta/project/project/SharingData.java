@@ -7,39 +7,41 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.Settings;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.Window;
 import android.webkit.DownloadListener;
 import android.webkit.URLUtil;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.FrameLayout;
 import android.widget.Toast;
 
 public class SharingData extends AppCompatActivity {
 
     private String site;
    private Webs mWebview;
-    private FrameLayout mwebContainer;
     private Toolbar toolbar;
     private Context context = this;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFeatureInt(Window.FEATURE_PROGRESS, Window.PROGRESS_VISIBILITY_ON);
+
         setContentView(R.layout.activity_sharing_data);
         toolbar = (Toolbar) findViewById(R.id.toolbars);
         setSupportActionBar(toolbar);
-        setProgressBarIndeterminateVisibility(true);
-        setProgressBarVisibility(true);
+        if (!checkWriteExternalPermission()) {
+            Toast.makeText(this,"Please allow storage permission",Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent();
+            intent.setAction(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+            Uri uri = Uri.fromParts("package", getPackageName(), null);
+            intent.setData(uri);
+            startActivity(intent);
+        }
         mWebview = (Webs) findViewById(R.id.web);
-        Webs webs= new Webs(context);
-
         Intent intent = getIntent();
         Bundle extra = intent.getExtras();
         site = extra.getString("site_name");
@@ -57,7 +59,6 @@ public class SharingData extends AppCompatActivity {
 
         });
         mWebview.setDownloadListener(new DownloadListener() {
-
             public void onDownloadStart(String url, String userAgent,
                                         String contentDisposition, String mimetype,
                                         long contentLength) {
@@ -86,7 +87,6 @@ public class SharingData extends AppCompatActivity {
         else if(site.equals("Mobile TV")) {
             mWebview.loadUrl("http://172.16.75.200/mobitv");
         }
-        webs.Download(context);
 
     }
 
@@ -153,14 +153,14 @@ public class SharingData extends AppCompatActivity {
         return true;
     }
 
-//    @Override
-//    public void finish() {
-//        if ( mWebview != null) {
-//            mWebview.clearCache(true);
-//            mWebview.clearHistory();
-//        }
-//        super.finish();
-//    }
+    @Override
+    public void finish() {
+        if ( mWebview != null) {
+            mWebview.clearCache(true);
+            mWebview.clearHistory();
+        }
+        super.finish();
+    }
 
     private boolean checkInstalled() {
         PackageManager pm = getPackageManager();
@@ -172,6 +172,12 @@ public class SharingData extends AppCompatActivity {
             e.printStackTrace();
         }
         return false;
+    }
+    private boolean checkWriteExternalPermission()
+    {
+        String permission = "android.permission.WRITE_EXTERNAL_STORAGE";
+        int res = context.checkCallingOrSelfPermission(permission);
+        return (res == PackageManager.PERMISSION_GRANTED);
     }
 
 }
